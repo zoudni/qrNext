@@ -30,7 +30,11 @@ const Scanner = () => {
   return (
     <div>
         { scanner
-        ? <div> Success: <a href={scanner}>{scanner}</a></div>
+        ? <div> Success: 
+            <p>
+                {scanner}
+            </p>
+        </div>
         : <div id='reader'></div>
         }
     </div>
