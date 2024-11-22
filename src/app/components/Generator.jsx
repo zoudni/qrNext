@@ -1,12 +1,14 @@
 'use client'
+
 import {useState} from 'react'
 import QRCode from "qrcode"
-const Generator = () => {
+import placeholder from '../../../public/code.png'
+const useGenerator = () => {
 
 
     const [user, setUser] = useState({ name: "", surname: "" }); 
     const [formData, setFormData] = useState({ name: "", surname: "" }); 
-    const [src, setSrc] = useState("");
+    const [src, setSrc] = useState(placeholder);
   
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -29,11 +31,10 @@ const Generator = () => {
         .catch((err) => console.error("Error generating QR Code:", err));
     };
 
-  return (
+  return {
+    src, user, formData,
+    render: (
     <div>
-
-  {src && <img src={src} alt="QR Code" />}
-      
 
     <div className="flex flex-col">
       <form onSubmit={handleSubmit} className="flex flex-col space-y-5">
@@ -64,8 +65,10 @@ const Generator = () => {
 
       </div>
 
+  
+
     </div>
-  )
+  )}
 }
 
-export default Generator
+export default useGenerator
