@@ -7,11 +7,7 @@ import Image from "next/image";
 export default function Home() {
 
 
-  const data = { 
-    id: "1",
-    name: "zain", 
-    surname: "kara", 
-  };
+
 
   const { render , src } = useGenerator();
 
@@ -28,11 +24,9 @@ export default function Home() {
 
             {src && <Image src={src} alt="QR Code"  width={250} height={250}/>}
 
-
             </div>
           
       </div>
-
 
       <Scanner />
     </div>

@@ -6,7 +6,7 @@ import placeholder from '../../../public/code.png'
 const useGenerator = () => {
 
 
-    const [user, setUser] = useState({ name: "", surname: "" }); 
+    const [user, setUser] = useState([]); 
     const [formData, setFormData] = useState({ name: "", surname: "" }); 
     const [src, setSrc] = useState(placeholder);
   
@@ -20,12 +20,19 @@ const useGenerator = () => {
   
     const handleSubmit = (e) => { 
       e.preventDefault();
-      setUser(formData); // Set the user object
-      console.log("User Object:", formData);
+
+      const newUser = {id: (Date.now().toString()) , ...formData}
+
+      setUser((prevUsers) => [...prevUsers, newUser]); // Set the user object
+
+      setFormData({name:"", surname:""}); 
+
+      console.log("Updated User List:", [...user, newUser]);
+
     };
   
     const generateQRCode = () => {
-      const text = JSON.stringify(user); // Create a stringified version of the user object
+      const text = JSON.stringify(user[user.length-1]); // Create a stringified version of the user object
       QRCode.toDataURL(text)
         .then((url) => setSrc(url))
         .catch((err) => console.error("Error generating QR Code:", err));
