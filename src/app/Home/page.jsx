@@ -1,7 +1,7 @@
 "use client";
 
-import Scanner from "./components/Scanner";
-import useGenerator from "./components/Generator";
+import Scanner from "../components/Scanner";
+import useGenerator from "../components/Generator";
 import Image from "next/image";
 
 export default function Home() {
