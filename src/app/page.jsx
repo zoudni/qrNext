@@ -1,28 +1,27 @@
 "use client";
 
-import Scanner from "./components/Scanner";
-import useGenerator from "./components/Generator";
-import Image from "next/image";
 
+import Image from "next/image";
+import heroImage from "../../public/QR.svg"
+import Button from "./components/Button"
 export default function Home() {
-  const { render, src } = useGenerator();
 
   return (
-    <div className=" flex flex-col h-screen justify-center items-center justify-items-center space-y-5">
-      <div className="flex flex-col md:flex-row  justify-center items-center space-y-5 md:space-x-5 ">
-        <div>
-          <h1 className="capitalize font-bold text-2xl">
-            QR code Scanner/Generator
-          </h1>
-          {render}
-        </div>
+    <section className='flex flex-col md:flex-row p-10 items-center justify-center   lg:px-[15vw]  h-screen lg:min-h-full' id='home'>
+     
+      <div className='w-full text-balance flex flex-col items-center justify-center mt-10 sm:mt-20 md:mt-5 lg:mt-0 md:items-start'>
+        <h1 className=' text-2xl md:text-4xl lg:text-6xl leading-normal lg:leading-relaxed font-rb font-bold text-oliveGreen text-center md:text-left '>Manage Your Business with QR Codes</h1>
+       
+        {/* mobile image */}
+        <Image src={heroImage} alt='coding infront of a pc holding a cup of coffee '  width={350} height={350} className='flex md:hidden'/>
 
-        <div className="w-[250px] h-[250px] bg-blue-500 p-10 rounded-xl">
-          {src && <Image src={src} alt="QR Code" width={250} height={250} />}
-        </div>
+        <p className='text-sm md:text-lg lg:text-xl text-pretty  text-center md:text-start leading-relaxed mt-7 md:mt-14 font-rb font-light '>Generate QR codes for events, coupons and much more</p>
+      
+        <Button href='/sign-up' buttonText='Get Started' className='mt-7 md:mt-10' />
+
       </div>
-
-      <Scanner />
-    </div>
+      {/* Desktop image */}
+      <Image src={heroImage} alt='coding infront of a pc holding a cup of coffee '  width={600} height={600} className='hidden md:flex' />
+    </section>
   );
 }
