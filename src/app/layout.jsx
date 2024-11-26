@@ -1,6 +1,16 @@
 import localFont from "next/font/local";
 import "./globals.css";
 
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'; 
+import { arSA } from "@clerk/localizations"
+
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -19,12 +29,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <ClerkProvider localization={arSA}>
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
         {children}
       </body>
     </html>
+  </ClerkProvider>
   );
 }

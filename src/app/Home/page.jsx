@@ -4,8 +4,24 @@ import Scanner from "../components/Scanner";
 import useGenerator from "../components/Generator";
 import Image from "next/image";
 
+// authentication dependencies
+import { useUser } from "@clerk/nextjs";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+
 export default function Home() {
+
+  const {isLoaded, isSignedIn } = useUser(); 
   const { render, src } = useGenerator();
+  const router = useRouter(); 
+
+
+  useEffect(() => { 
+    if(isLoaded && !isSignedIn){ 
+      router.push(`/sign-in?redirect=/Home`)
+    }
+  },[isLoaded, isSignedIn, router]);
 
   return (
     <div className=" flex flex-col h-screen justify-center items-center justify-items-center space-y-5">
