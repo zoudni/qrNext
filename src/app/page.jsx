@@ -31,7 +31,7 @@ export default function Home() {
           <Button
             href="/sign-up"
             buttonText="Get Started"
-            className="mt-7 md:mt-10"
+            className="mt-7 md:mt-10 bg-blue-600 text-slate-100"
           />
           <Button
             href="/sign-in"
