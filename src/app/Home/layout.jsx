@@ -36,7 +36,11 @@ export default function Layout({ children }) {
 
       <Sidebar toggle={toggle} />
 
-      <div className="p-4 sm:ml-64">{children}</div>
+      <div className="flex justify-center items-center p-4 mt-32  sm:ml-64  ">
+        {children}
+        </div>
+
+
     </>
   );
 }

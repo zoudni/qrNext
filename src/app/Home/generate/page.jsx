@@ -21,7 +21,7 @@ export default function Home() {
   }, [isLoaded, isSignedIn, router]);
 
   return (
-    <div className=" flex flex-col h-screen justify-center items-center justify-items-center space-y-5">
+    <div className=" flex flex-col  justify-center items-center justify-items-center space-y-5">
       <div className="flex flex-col md:flex-row  justify-center items-center space-y-5 md:space-x-5 ">
         <div>
           <h1 className="capitalize font-bold text-2xl">

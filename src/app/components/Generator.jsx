@@ -91,7 +91,7 @@ const useGenerator = () => {
           </button>
 
           {src && (
-            <div className="space-x-2">
+            <div className="flex mt-3 space-x-2">
 
             <DownloadPdf lastGeneratedUser={lastGeneratedUser} src={src}/>
             <MultiUserPdf user={user} src={src}/>

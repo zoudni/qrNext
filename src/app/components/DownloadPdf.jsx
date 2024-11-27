@@ -23,7 +23,7 @@ const DownloadPdf = ({ lastGeneratedUser, src}) => {
     <>
       <button
         type="button"
-        className="bg-green-500 rounded-lg p-4 font-bold text-slate-100 mt-3"
+        className="bg-green-500 rounded-lg p-4 font-bold text-slate-100"
         onClick={downloadPDF}
       >
         Download PDF

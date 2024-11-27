@@ -46,7 +46,7 @@ const MultiUserPdf = ({user}) => {
     <>
       <button
         type="button"
-        className="bg-purple-500 rounded-lg p-4 font-bold text-slate-100 mt-3 "
+        className="bg-purple-500 rounded-lg p-4 font-bold text-slate-100 "
         onClick={downloadMultiUserPDF}
       >
         Download Multi-User PDF
