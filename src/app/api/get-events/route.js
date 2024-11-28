@@ -1,6 +1,5 @@
-// app/api/get-events/route.js
-
 import postgres from 'postgres';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
@@ -14,21 +13,11 @@ export async function GET() {
       ORDER BY start_date DESC
     `;
 
-    // Return the rows as a JSON response
-    return new Response(JSON.stringify(rows), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  } catch (error) {
-    console.error('Error fetching events:', error);
-
-    // Return an error response
-    return new Response(
-      JSON.stringify({ error: 'Failed to fetch events', details: error.message }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    return NextResponse.json(rows);
   }
+    catch(error){ 
+      console.error("Error fetching events:",error); 
+      return NextResponse.json(error)
+    }
+  
 }
