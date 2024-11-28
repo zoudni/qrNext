@@ -18,7 +18,7 @@ const Navbar = ({toggle , setToggle }) => {
               <span className="sr-only">Open sidebar</span>
               <MenuIcon />
             </button>
-            <Link href="/home" className="flex ms-2 md:me-24">
+            <Link href="/Home" className="flex ms-2 md:me-24">
               <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                 QR Generator
               </span>

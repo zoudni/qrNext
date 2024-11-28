@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { fetchEvents } from "../../lib/data.js";
-import EventTable from "../components/EventTable.jsx";
+import { fetchEvents } from "../../../lib/data.js";
+
+import EventForm from '../../components/EventForm.jsx';
+import EventTable from '../../components/EventTable.jsx';
 
 export default function Home() {
   const [events, setEvents] = useState([]); // Initialize as an empty array
@@ -25,10 +27,9 @@ export default function Home() {
   }, [isLoaded, isSignedIn, router]);
 
   return (
-    <div>
-      <h1>This is the Home Page</h1>
-      <EventTable/>
-
+    <div className="">
+        <EventForm/>
+        <EventTable/>
     </div>
   );
 }
