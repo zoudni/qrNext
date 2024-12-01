@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import heroImage from "../../public/QR.svg";
 import Button from "./components/Button";

@@ -1,58 +1,19 @@
-// components/EventForm.js
 "use client";
-import { useUser } from "@clerk/nextjs";
-import { useState } from "react";
+
+import { useActionState, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { createEvent } from '../../lib/actions.js'
 export default function EventForm() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const { user } = useUser();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (!title || !description || !startDate || !endDate) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
-    const eventData = {
-      user_id: user.id, // Replace with actual user ID if needed (e.g., from authentication)
-      title,
-      description,
-      start_date: startDate.toISOString(),
-      end_date: endDate.toISOString(),
-    };
-
-    try {
-      const response = await fetch("/api/create-event", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(eventData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create event.");
-      }
-
-      const result = await response.json();
-      alert(`Event created: ${result.title}`);
-    } catch (error) {
-      console.error("Error creating event:", error);
-      alert("An error occurred while creating the event.");
-    }
-  };
+  const [state, FormAction] = useActionState(createEvent, null); 
+  const [startDate , setStartDate] = useState(); 
+  const [endDate , setEndDate] = useState(); 
 
   return (
     <div className="max-w-xl mx-auto p-4">
       <h2 className="text-2xl font-semibold mb-4">Create a New Event</h2>
-      <form onSubmit={handleSubmit}>
+      <form action={FormAction}>
         <div className="mb-4">
           <label htmlFor="title" className="block text-gray-700">
             Event Title
@@ -60,9 +21,8 @@ export default function EventForm() {
           <input
             type="text"
             id="title"
+            name="title"
             className="w-full p-2 border border-gray-300 rounded"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
             required
           />
         </div>
@@ -74,18 +34,19 @@ export default function EventForm() {
           <textarea
             id="description"
             className="w-full p-2 border border-gray-300 rounded"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            name="description"
             required
           />
         </div>
+
         <div className="flex justify-between">
-          <div className="mb-4 ">
+          <div className="mb-4">
             <label htmlFor="startDate" className="block text-gray-700">
               Start Date
             </label>
             <DatePicker
               id="startDate"
+              name="start_date"
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               showTimeSelect
@@ -101,6 +62,7 @@ export default function EventForm() {
             </label>
             <DatePicker
               id="endDate"
+              name="end_date"
               selected={endDate}
               onChange={(date) => setEndDate(date)}
               showTimeSelect
@@ -120,6 +82,9 @@ export default function EventForm() {
           </button>
         </div>
       </form>
+
+
+
     </div>
   );
 }
