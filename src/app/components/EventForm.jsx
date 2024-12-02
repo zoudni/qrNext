@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { createEvent } from '../../lib/actions.js'
 export default function EventForm() {
 
-  const [state, FormAction] = useActionState(createEvent, null); 
+  const [state, FormAction, isPending] = useActionState(createEvent, null); 
   const [startDate , setStartDate] = useState(); 
   const [endDate , setEndDate] = useState(); 
 
@@ -76,7 +76,8 @@ export default function EventForm() {
         <div className="mb-4">
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            className={isPending ?  `w-full bg-blue-500 text-white p-2 rounded opacity-50 cursor-not-allowed`: `w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600`}
+            disabled={isPending}
           >
             Create Event
           </button>
