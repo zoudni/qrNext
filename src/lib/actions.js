@@ -47,3 +47,9 @@ export async function createEvent(previousState, formData) {
     throw new Error('Failed to create event');
   }
 }
+
+
+
+export async function deleteEvent(id) {
+  
+}

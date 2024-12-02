@@ -1,5 +1,6 @@
 import { getEvents } from "../../lib/data.js";
 import { auth } from '@clerk/nextjs/server'
+import DeleteButton from './DeleteButton.jsx';
 export default async function EventTable() {
 
   const { userId } = await auth();   
@@ -49,9 +50,7 @@ export default async function EventTable() {
                   <td className="px-6 py-4">{formatDate(event.start_date)}</td> {/* Format start date */}
                   <td className="px-6 py-4">{formatDate(event.end_date)}</td> {/* Format end date */}
                   <td className="px-6 py-4 text-right">
-                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                      Edit
-                    </a>
+                      <DeleteButton id={event.id} />
                   </td>
                 </tr>
               ))}
