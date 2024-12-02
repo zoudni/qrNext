@@ -2,6 +2,7 @@
 import postgres from 'postgres';
 import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
+import { NextResponse } from 'next/server';
 
 export async function createEvent(previousState, formData) {
   try {
@@ -50,6 +51,19 @@ export async function createEvent(previousState, formData) {
 
 
 
-export async function deleteEvent(id) {
+export async function deleteEvent(previousState ,id) {
+
+  try{ 
+
+    const sql = postgres(process.env.DATABASE_URL, { ssl: 'require' });
+
+    await sql`DELETE FROM events WHERE id = ${id};`;
+   
+    revalidatePath("/Home/events");
+
+  }catch(error){ 
+    console.error("Error in Delete event: " , error); 
+    throw new Error('Faild to delete event')
+  }
   
 }

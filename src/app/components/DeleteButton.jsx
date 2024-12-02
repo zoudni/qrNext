@@ -9,7 +9,9 @@ export default function DeleteButton({ id }) {
   return (
     <button
       className="font-medium text-red-600 dark:text-red-500 hover:underline"
-      onClick={() => deleteEvent(id)}
+      onClick={() =>{ 
+        action(id);
+      }}
     >
       Delete
     </button>

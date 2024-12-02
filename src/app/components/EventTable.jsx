@@ -52,6 +52,7 @@ export default async function EventTable() {
                   <td className="px-6 py-4 text-right">
                       <DeleteButton id={event.id} />
                   </td>
+                  
                 </tr>
               ))}
             </tbody>
