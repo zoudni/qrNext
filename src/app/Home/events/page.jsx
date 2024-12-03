@@ -4,7 +4,7 @@ import EventTable from '../../components/EventTable.jsx';
 export default function Events() {
  
   return (
-    <div >
+    <div className='flex flex-col md:flex-row justify-around'>
         <EventForm/>
         <EventTable/>
     </div>

@@ -11,7 +11,7 @@ export default function EventForm() {
   const [endDate , setEndDate] = useState(); 
 
   return (
-    <div className="max-w-xl mx-auto p-4">
+    <div className="max-w-xl p-4 ">
       <h2 className="text-2xl font-semibold mb-4">Create a New Event</h2>
       <form action={FormAction}>
         <div className="mb-4">

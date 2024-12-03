@@ -1,15 +1,15 @@
 import { getEvents } from "../../lib/data.js";
-import { auth } from '@clerk/nextjs/server'
-import DeleteButton from './DeleteButton.jsx';
+import { auth } from "@clerk/nextjs/server";
+import DeleteButton from "./DeleteButton.jsx";
+import Link from "next/link.js";
 export default async function EventTable() {
-
-  const { userId } = await auth();   
-  const events = await getEvents(userId); 
-    // Function to format the date to a readable format
-    const formatDate = (date) => {
-      const formattedDate = new Date(date);
-      return formattedDate.toDateString(); // Format as per your needs (e.g., "MM/DD/YYYY")
-    };
+  const { userId } = await auth();
+  const events = await getEvents(userId);
+  // Function to format the date to a readable format
+  const formatDate = (date) => {
+    const formattedDate = new Date(date);
+    return formattedDate.toDateString(); // Format as per your needs (e.g., "MM/DD/YYYY")
+  };
   return (
     <div>
       {events.length > 0 ? (
@@ -44,15 +44,20 @@ export default async function EventTable() {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {event.title}
+                    <Link href={`/Home/events/${event.id}`}>{event.title}</Link>
                   </th>
                   <td className="px-6 py-4">{event.description}</td>
-                  <td className="px-6 py-4">{formatDate(event.start_date)}</td> {/* Format start date */}
-                  <td className="px-6 py-4">{formatDate(event.end_date)}</td> {/* Format end date */}
+                  <td className="px-6 py-4">
+                    {formatDate(event.start_date)}
+                  </td>{" "}
+                  {/* Format start date */}
+                  <td className="px-6 py-4">
+                    {formatDate(event.end_date)}
+                  </td>{" "}
+                  {/* Format end date */}
                   <td className="px-6 py-4 text-right">
-                      <DeleteButton id={event.id} />
+                    <DeleteButton id={event.id} />
                   </td>
-                  
                 </tr>
               ))}
             </tbody>
