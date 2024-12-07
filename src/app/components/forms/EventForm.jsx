@@ -3,7 +3,7 @@
 import { useActionState, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { createEvent } from '../../lib/actions.js'
+import { createEvent } from '../../../lib/actions.js'
 export default function EventForm() {
 
   const [state, FormAction, isPending] = useActionState(createEvent, null); 

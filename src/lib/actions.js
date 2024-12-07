@@ -95,6 +95,8 @@ export async function generateQrInfo( previousState, formData ) {
         generate_series(1, ${amount});
     `;
 
+    revalidatePath(`/Home/events/${event_id}`)
+
   }catch(error){ 
     console.error("Error in generating QR info: ", error); 
     throw new Error("Faild To Generate QR Info"); 

@@ -1,32 +1,44 @@
-'use client'
+"use client";
 import { useActionState } from "react";
 import { generateQrInfo } from "../../../lib/actions.js";
 import { useParams } from "next/navigation";
 
+export default function GenerateForm() {
+  let { event_id } = useParams();
 
-export default function GenerateForm(){ 
+  const [data, Generate, isPending] = useActionState(generateQrInfo, null);
 
-    let { event_id } = useParams(); 
+  return (
+    <div className="w-96">
+    <form action={Generate}>
+      <input type="hidden" name="event_id" value={event_id} />
 
-    const [data, action, isPending] = useActionState(generateQrInfo, null);
-    const generateWithId = action.bind(event_id); 
+      <div className="mb-4">
+          <label htmlFor="amount" className="block text-gray-700">
+            Amount of QR codes:
+          </label>
+          <input
+            type="number"
+            id="amount"
+            name="amount"
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+      
+      <button
+        type="submit"
+        className={
+          isPending
+            ? `w-full bg-blue-500 text-white p-2 rounded opacity-50 cursor-not-allowed`
+            : `w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600`
+        }
+        disabled={isPending}
+      >
+        Generate
+      </button>
+    </form>
 
-    return(
-           <form action={generateWithId}>
-          <label htmlFor="amount">Amount of QR codes:</label>
-          <input type="hidden" name="event_id" value={event_id} />
-          <input type="number" id="amount" name="amount" />
-          <button
-            type="submit"
-            className={
-              isPending
-                ? `w-full bg-blue-500 text-white p-2 rounded opacity-50 cursor-not-allowed`
-                : `w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600`
-            }
-            disabled={isPending}
-          >
-            Generate
-          </button>
-        </form>
-    ); 
+    </div>
+  );
 }
