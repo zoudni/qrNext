@@ -1,16 +1,18 @@
 'use server';
-import postgres from 'postgres';
+
+import { Pool } from 'pg';
 import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
-import { NextResponse } from 'next/server';
-import { error } from 'console';
 
+// Create a connection pool
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
 
-//sql connection  
-const sql = postgres(process.env.DATABASE_URL, { ssl: 'require' });
-
-
+// Function to create an event
 export async function createEvent(previousState, formData) {
+  const client = await pool.connect();
   try {
     const title = formData.get('title');
     const description = formData.get('description');
@@ -31,74 +33,75 @@ export async function createEvent(previousState, formData) {
       throw new Error('Invalid date format');
     }
 
-
-    const [result] = await sql`
+    const result = await client.query(
+      `
       INSERT INTO events (user_id, title, description, start_date, end_date, created_at, updated_at)
-      VALUES (${userId}, ${title}, ${description}, ${start_date}, ${end_date}, NOW(), NOW())
+      VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
       RETURNING id, title, description, start_date, end_date, created_at, updated_at
-    `;
+      `,
+      [userId, title, description, start_date, end_date]
+    );
 
-    console.log('SQL Insert Result:', result);
+    console.log('SQL Insert Result:', result.rows[0]);
 
     revalidatePath("/Home/events");
+
     return {
-      ...result,
-      start_date: result.start_date.toISOString(),
-      end_date: result.end_date.toISOString(),
-      created_at: result.created_at.toISOString(),
-      updated_at: result.updated_at.toISOString(),
+      ...result.rows[0],
+      start_date: result.rows[0].start_date.toISOString(),
+      end_date: result.rows[0].end_date.toISOString(),
+      created_at: result.rows[0].created_at.toISOString(),
+      updated_at: result.rows[0].updated_at.toISOString(),
     };
   } catch (error) {
     console.error('Error in createEvent:', error);
     throw new Error('Failed to create event');
+  } finally {
+    client.release();
   }
 }
 
-
-
-export async function deleteEvent(previousState ,id) {
-
-  try{ 
-
-    await sql`DELETE FROM events WHERE id = ${id};`;
-   
+// Function to delete an event
+export async function deleteEvent(previousState, id) {
+  const client = await pool.connect();
+  try {
+    await client.query(`DELETE FROM events WHERE id = $1`, [id]);
     revalidatePath("/Home/events");
-
-  }catch(error){ 
-    console.error("Error in Delete event: " , error); 
-    throw new Error('Faild to delete event')
+  } catch (error) {
+    console.error("Error in deleteEvent:", error);
+    throw new Error('Failed to delete event');
+  } finally {
+    client.release();
   }
-  
 }
 
+// Function to generate QR codes
+export async function generateQrInfo(previousState, formData) {
+  const client = await pool.connect();
+  try {
+    const amount = parseInt(formData.get("amount"), 10);
+    const event_id = formData.get("event_id");
 
-export async function generateQrInfo( previousState, formData ) {
+    console.log(`Generating ${amount} QR codes for event ID: ${event_id}`);
 
-  const amount = formData.get("amount");
-  const event_id = formData.get("event_id");
-
-  console.log(amount + " " + event_id); 
-
-  try{
-    // Validate inputs
-    if (!event_id || !amount || amount <= 0) {
-       throw error({ error: 'Invalid input' }, { status: 400 });
+    if (!event_id || isNaN(amount) || amount <= 0) {
+      throw new Error('Invalid input');
     }
-    // Insert multiple QR codes
-    await sql`
+
+    await client.query(
+      `
       INSERT INTO qr_codes (event_id, code, active)
-      SELECT 
-        ${event_id}, 
-        gen_random_uuid()::TEXT, 
-        TRUE
-      FROM 
-        generate_series(1, ${amount});
-    `;
+      SELECT $1, gen_random_uuid()::TEXT, TRUE
+      FROM generate_series(1, $2)
+      `,
+      [event_id, amount]
+    );
 
-    revalidatePath(`/Home/events/${event_id}`)
-
-  }catch(error){ 
-    console.error("Error in generating QR info: ", error); 
-    throw new Error("Faild To Generate QR Info"); 
+    revalidatePath(`/Home/events/${event_id}`);
+  } catch (error) {
+    console.error("Error in generating QR info:", error);
+    throw new Error("Failed to generate QR Info");
+  } finally {
+    client.release();
   }
 }
