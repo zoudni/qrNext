@@ -22,7 +22,7 @@ export async function GET(request) {
   
     // If user is not signed in, redirect
     if (!userId) {
-      return NextResponse.redirect('http://localhost:3000/?redirect=qr/validate');
+      return NextResponse.redirect(new URL('/?redirect=qr/validate', request.url));
     }
     // Validate the QR code and retrieve the associated event and user_id
     const result = await client.query(`

@@ -1,32 +1,45 @@
-'use client'
+"use client";
 
-export default function GenerateSingleCodeBtn({ token , setQRLink}) {
-  function generateString(token) {
+import { useState } from "react";
+import QrCodeModal from "../QrCodeModal";
+import QRCode from "qrcode";
+
+export default function GenerateSingleCodeBtn({ token }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [qrImage, setQrImage] = useState("");
+
+  async function generateQRCode(token) {
     try {
       const link = `http://localhost:3000/api/qr/validate?token=${token}`;
-      console.log("Your code is: " + link);
-      return link; // This is fine as long as it's not directly affecting the `onClick` binding.
+      const qrCodeImage = await QRCode.toDataURL(link);
+      return qrCodeImage;
     } catch (error) {
-      console.error("Chosen token isn't correct");
-      return null; // Return null or handle the error gracefully.
+      console.error("Error generating QR code:", error);
+      return null;
     }
   }
 
-  function handleClick() {
-    const link = generateString(token);
-    if (link) {
-      //setQRLink(link);
-      alert(`Generated link: ${link}`); // Example action upon successful generation
-      console.log("link: "+ link)
+  async function handleClick() {
+    const qrCodeImage = await generateQRCode(token);
+    if (qrCodeImage) {
+      setQrImage(qrCodeImage);
+      setIsModalOpen(true);
     }
   }
 
   return (
-    <button
-      onClick={handleClick} // Use a clear function for `onClick`
-      className="underline text-blue-300 hover:text-blue-100"
-    >
-      Generate Code
-    </button>
+    <>
+      <button
+        onClick={handleClick}
+        className="underline text-blue-300 hover:text-blue-100"
+      >
+        Generate Code
+      </button>
+      <QrCodeModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        qrImage={qrImage}
+      />
+    </>
   );
 }
