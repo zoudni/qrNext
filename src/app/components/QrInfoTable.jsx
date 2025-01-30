@@ -1,7 +1,9 @@
-import { getQrInfo } from "../../lib/data.js";
-export default async function QrInfo({event_id}) {
-  const QrInfo = await getQrInfo(event_id);
 
+import { getQrInfo } from "../../lib/data.js";
+import GenerateSingleCodeBtn from "../components/buttons/GenerateSingleCode.jsx"
+export default async function QrInfo({event_id, setQRLink}) {
+  const QrInfo = await getQrInfo(event_id);
+  
   return (
     <div>
       {QrInfo.length > 0 ? (
@@ -17,6 +19,9 @@ export default async function QrInfo({event_id}) {
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Activity
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  
                 </th>
               </tr>
             </thead>
@@ -34,6 +39,10 @@ export default async function QrInfo({event_id}) {
                   </th>
                   <td className="px-6 py-4">{QrInfo.code}</td>
                   <td className="px-6 py-4">{QrInfo.active ? <div className="bg-green-400 w-5 h-5 rounded-full"></div> : <div className="bg-red-600 w-5 h-5 rounded-full"></div>}</td>
+                  <td className="px-6 py-4">
+                    <GenerateSingleCodeBtn token={QrInfo.code} setQRLink={setQRLink}/>
+                  </td>
+
                 </tr>
               ))}
             </tbody>

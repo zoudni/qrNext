@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import placeholder from "../../../public/code.png";
-import DownloadPdf from "./DownloadPdf";
-import MultiUserPdf from "./MultiUserPdf";
-import QRCode from "qrcode"
+import DownloadPdf from "../components/DownloadPdf";
+import MultiUserPdf from "../components/MultiUserPdf";
+import QRCode from "qrcode";
 
 const useGenerator = () => {
   const [user, setUser] = useState([]); // All users
@@ -44,14 +44,11 @@ const useGenerator = () => {
       .catch((err) => console.error("Error generating QR Code:", err));
   };
 
-
-
-
   return {
     src,
     user,
     formData,
-    lastGeneratedUser, 
+    lastGeneratedUser,
     render: (
       <div>
         <div className="flex flex-col">
@@ -92,9 +89,8 @@ const useGenerator = () => {
 
           {src && (
             <div className="flex mt-3 space-x-2">
-
-            <DownloadPdf lastGeneratedUser={lastGeneratedUser} src={src}/>
-            <MultiUserPdf user={user} src={src}/>
+              <DownloadPdf lastGeneratedUser={lastGeneratedUser} src={src} />
+              <MultiUserPdf user={user} src={src} />
             </div>
           )}
         </div>

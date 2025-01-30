@@ -1,7 +1,7 @@
 "use client";
 
 import Scanner from "../../components/Scanner";
-import useGenerator from "../../components/Generator";
+import useGenerator from "../../hooks/useGenerator";
 import Image from "next/image";
 
 // authentication dependencies

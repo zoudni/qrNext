@@ -3,7 +3,7 @@ import { useActionState } from "react";
 import { generateQrInfo } from "../../../lib/actions.js";
 import { useParams } from "next/navigation";
 
-export default function GenerateForm() {
+export default function   GenerateForm() {
   let { event_id } = useParams();
 
   const [data, Generate, isPending] = useActionState(generateQrInfo, null);
