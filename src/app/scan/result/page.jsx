@@ -1,11 +1,11 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 
-export default function ValidationResultPage() {
+function ValidationResult() {
   const searchParams = useSearchParams();
   const status = searchParams.get("status");
   const message = searchParams.get("message");
@@ -53,5 +53,19 @@ export default function ValidationResultPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ValidationResultPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+      }
+    >
+      <ValidationResult />
+    </Suspense>
   );
 }
