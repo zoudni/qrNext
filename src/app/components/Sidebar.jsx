@@ -2,10 +2,9 @@ import Link from "next/link";
 import EventIcon from "./icons/EventIcon";
 import SignOutIcon from "./icons/SignoutIcon";
 import { SignOutButton } from "@clerk/nextjs";
+//import QrCodeIcon from "./icons/QrCodeIcon";
 
 const Sidebar = ({ toggle }) => {
-
-
   return (
     <aside
       id="logo-sidebar"
@@ -24,7 +23,6 @@ const Sidebar = ({ toggle }) => {
               <EventIcon />
               <span className="ms-3">Events</span>
             </Link>
-            
           </li>
           <li>
             <Link
@@ -34,7 +32,15 @@ const Sidebar = ({ toggle }) => {
               <EventIcon />
               <span className="ms-3">Generate</span>
             </Link>
-            
+          </li>
+          <li>
+            <Link
+              href="/Home/scan"
+              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            >
+              <EventIcon className="w-5 h-5" />
+              <span className="ms-3">Scan QR</span>
+            </Link>
           </li>
           <li>
             <SignOutButton>
