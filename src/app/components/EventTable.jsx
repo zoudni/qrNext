@@ -2,60 +2,64 @@ import { getEvents } from "../../lib/data.js";
 import { auth } from "@clerk/nextjs/server";
 import DeleteButton from "./DeleteButton.jsx";
 import Link from "next/link.js";
+
 export default async function EventTable() {
   const { userId } = await auth();
   const events = await getEvents(userId);
-  // Function to format the date to a readable format
+
   const formatDate = (date) => {
     const formattedDate = new Date(date);
-    return formattedDate.toDateString(); // Format as per your needs (e.g., "MM/DD/YYYY")
+    return formattedDate.toDateString();
   };
+
   return (
-    <div>
+    <div className="w-full bg-white rounded-lg shadow-md overflow-hidden">
       {events.length > 0 ? (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[640px] table-auto">
+            <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                <th scope="col" className="px-6 py-3">
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
                   Event Title
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 hidden md:table-cell">
                   Description
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Starting Date
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                  Start Date
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Ending Date
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 hidden sm:table-cell">
+                  End Date
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  <span className="sr-only">Edit</span>
+                <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600">
+                  Actions
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-200">
               {events.map((event) => (
                 <tr
                   key={event.id}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  className="hover:bg-gray-50 transition-colors duration-200"
                 >
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    <Link href={`/Home/events/${event.id}`}>{event.title}</Link>
-                  </th>
-                  <td className="px-6 py-4">{event.description}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                    <Link 
+                      href={`/Home/events/${event.id}`}
+                      className="hover:text-blue-600 hover:underline"
+                    >
+                      {event.title}
+                    </Link>
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-500 hidden md:table-cell">
+                    {event.description}
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-500">
                     {formatDate(event.start_date)}
-                  </td>{" "}
-                  {/* Format start date */}
-                  <td className="px-6 py-4">
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-500 hidden sm:table-cell">
                     {formatDate(event.end_date)}
-                  </td>{" "}
-                  {/* Format end date */}
-                  <td className="px-6 py-4 text-right">
+                  </td>
+                  <td className="px-4 py-3 text-right">
                     <DeleteButton id={event.id} />
                   </td>
                 </tr>
@@ -64,7 +68,9 @@ export default async function EventTable() {
           </table>
         </div>
       ) : (
-        <p>No events available.</p>
+        <div className="p-6 text-center text-gray-500">
+          No events available.
+        </div>
       )}
     </div>
   );

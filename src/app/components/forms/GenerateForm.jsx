@@ -9,7 +9,6 @@ export default function   GenerateForm() {
   const [data, Generate, isPending] = useActionState(generateQrInfo, null);
 
   return (
-    <div className="w-96">
     <form action={Generate}>
       <input type="hidden" name="event_id" value={event_id} />
 
@@ -39,6 +38,5 @@ export default function   GenerateForm() {
       </button>
     </form>
 
-    </div>
   );
 }
