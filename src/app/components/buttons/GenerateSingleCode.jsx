@@ -10,7 +10,10 @@ export default function GenerateSingleCodeBtn({ token }) {
 
   async function generateQRCode(token) {
     try {
-      const link = `http://localhost:3000/api/qr/validate?token=${token}`;
+      // Use the environment variable with a fallback
+      const baseUrl =
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+      const link = `${baseUrl}/api/qr/validate?token=${token}`;
       const qrCodeImage = await QRCode.toDataURL(link);
       return qrCodeImage;
     } catch (error) {

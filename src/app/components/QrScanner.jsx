@@ -11,10 +11,7 @@ export default function QrScanner() {
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", {
-      qrbox: {
-        width: window.innerWidth < 600 ? 200 : 250,
-        height: window.innerWidth < 600 ? 200 : 250,
-      },
+      qrbox: { width: 250, height: 250 },
       fps: 5,
     });
 
@@ -23,18 +20,7 @@ export default function QrScanner() {
       scanner.pause();
 
       try {
-        const url = new URL(decodedText);
-        const token = url.searchParams.get('token');
-
-        if (!token) {
-          setValidationStatus({
-            success: false,
-            message: "Invalid QR code format",
-          });
-          return;
-        }
-
-        const response = await fetch(`/api/qr/validate?token=${token}`);
+        const response = await fetch(`/api/qr/validate?token=${decodedText}`);
         const data = await response.json();
 
         setValidationStatus({
@@ -65,7 +51,7 @@ export default function QrScanner() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="p-4 max-w-md mx-auto">
       <div className="mb-4">
         {validationStatus && (
           <div
@@ -74,21 +60,21 @@ export default function QrScanner() {
             }`}
           >
             {validationStatus.success ? (
-              <CheckCircleIcon className="h-6 w-6 sm:h-8 sm:w-8 text-green-500" />
+              <CheckCircleIcon className="h-8 w-8 text-green-500" />
             ) : (
-              <XCircleIcon className="h-6 w-6 sm:h-8 sm:w-8 text-red-500" />
+              <XCircleIcon className="h-8 w-8 text-red-500" />
             )}
-            <span className="ml-2 text-sm sm:text-base">{validationStatus.message}</span>
+            <span className="ml-2">{validationStatus.message}</span>
           </div>
         )}
       </div>
 
-      <div id="reader" className="w-full max-w-full overflow-hidden rounded-lg"></div>
+      <div id="reader" className="w-full"></div>
 
       {!isScanning && (
         <button
           onClick={resetScanner}
-          className="mt-4 w-full bg-blue-500 text-white p-2 sm:p-3 rounded hover:bg-blue-600 text-sm sm:text-base"
+          className="mt-4 w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
         >
           Scan Another Code
         </button>
