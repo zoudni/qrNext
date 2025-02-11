@@ -13,7 +13,7 @@ export default async function EventTable() {
   };
 
   return (
-    <div className="w-full bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="w-full bg-white rounded-lg shadow-md overflow-hidden p-4">
       {events.length > 0 ? (
         <div className="overflow-x-auto">
           <table className="w-full min-w-[640px] table-auto">
@@ -43,7 +43,7 @@ export default async function EventTable() {
                   className="hover:bg-gray-50 transition-colors duration-200"
                 >
                   <td className="px-4 py-3 text-sm font-medium text-gray-900">
-                    <Link 
+                    <Link
                       href={`/Home/events/${event.id}`}
                       className="hover:text-blue-600 hover:underline"
                     >
@@ -68,8 +68,14 @@ export default async function EventTable() {
           </table>
         </div>
       ) : (
-        <div className="p-6 text-center text-gray-500">
+        <div className="flex flex-col items-center justify-center p-6 text-center text-gray-500">
           No events available.
+          <Link
+            href="/Home/events"
+            className="mt-4 inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
+          >
+            <span className="text-2xl">+</span> Create Event
+          </Link>
         </div>
       )}
     </div>

@@ -11,11 +11,11 @@ export default function EventForm() {
   const [endDate, setEndDate] = useState();
 
   return (
-    <div className="w-full max-w-xl p-4 bg-white rounded-lg shadow-md">
+    <div className="w-full max-w-xl p-4 bg-white rounded-lg shadow-md ">
       <h2 className="text-xl md:text-2xl font-semibold mb-6">
-        Create a New Event
+        {"Create a New Event"}
       </h2>
-      <form action={FormAction}>
+      <form action={FormAction} className="mb-6">
         <div className="mb-6">
           <label
             htmlFor="title"
@@ -49,7 +49,7 @@ export default function EventForm() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div>
+          <div className="w-full">
             <label
               htmlFor="startDate"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -65,10 +65,12 @@ export default function EventForm() {
               dateFormat="Pp"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               required
+              wrapperClassName="w-full"
+              calendarClassName="z-10"
             />
           </div>
 
-          <div>
+          <div className="w-full">
             <label
               htmlFor="endDate"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -84,6 +86,8 @@ export default function EventForm() {
               dateFormat="Pp"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               required
+              wrapperClassName="w-full"
+              calendarClassName="z-10"
             />
           </div>
         </div>

@@ -2,6 +2,7 @@
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import MenuIcon from "./icons/MenuIcon";
+import Image from "next/image";
 
 const Navbar = ({ toggle, setToggle }) => {
   return (
@@ -18,9 +19,10 @@ const Navbar = ({ toggle, setToggle }) => {
               <MenuIcon />
             </button>
             <Link href="/Home" className="flex ms-2 md:me-24">
-              <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
+              {/* <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                 QR Generator
-              </span>
+              </span> */}
+              <Image src="/logo.png" alt="logo" width={200} height={200} />
             </Link>
           </div>
 

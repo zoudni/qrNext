@@ -13,7 +13,7 @@ const Sidebar = ({ toggle }) => {
       } bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700`}
       aria-label="Sidebar"
     >
-      <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+      <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800 mt-10 ">
         <ul className="space-y-2 font-medium">
           <li>
             <Link
