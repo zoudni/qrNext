@@ -1,34 +1,28 @@
 "use server";
 
-// This should be a Server Component
-import { getQrInfo } from "../../lib/data.js";
-import { auth } from "@clerk/nextjs/server";
+import { getAllQR, getQrInfo } from "../../lib/data.js";
 import GenerateSingleCodeBtn from "./buttons/GenerateSingleCode.jsx";
 import DownloadAllQRCodesButton from "./DownloadAllQRCodesButton";
+import Pagination from "./pagination";
 
-// Add React Server Component directive
-
-export default async function QrInfo({ event_id}) {
-  const QrInfo = await getQrInfo(event_id);
+export default async function QrInfo({ event_id, page = 1, limit = 10 }) {
+  const offset = (page - 1) * limit;
+  const { data: QrInfo, total } = await getQrInfo(event_id, limit, offset);
+  const allQR = await getAllQR(event_id); 
+  const totalPages = Math.ceil(total / limit);
 
   return (
     <div>
       {QrInfo.length > 0 ? (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <DownloadAllQRCodesButton qrInfos={QrInfo} />
- 
+          <DownloadAllQRCodesButton qrInfos={allQR} />
+
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" className="px-6 py-3">
-                  Event ID
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  QR Code
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Activity
-                </th>
+                <th scope="col" className="px-6 py-3">Event ID</th>
+                <th scope="col" className="px-6 py-3">QR Code</th>
+                <th scope="col" className="px-6 py-3">Activity</th>
                 <th scope="col" className="px-6 py-3"></th>
               </tr>
             </thead>
@@ -53,14 +47,14 @@ export default async function QrInfo({ event_id}) {
                     )}
                   </td>
                   <td className="px-6 py-4">
-                    <GenerateSingleCodeBtn
-                      token={qrInfo.code}
-                    />
+                    <GenerateSingleCodeBtn token={qrInfo.code} />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+
+          <Pagination totalPages={totalPages} currentPage={page} />
         </div>
       ) : (
         <p>No QrInfos available.</p>

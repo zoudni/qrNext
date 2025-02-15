@@ -31,8 +31,43 @@ export async function getEvents(userId) {
   }
 }
 
+export async function getQrInfo(event_id, limit = 10, offset = 0) {
+  const client = await pool.connect();
+  try {
+    const result = await client.query(
+      `
+      SELECT *
+      FROM qr_codes
+      WHERE event_id = $1
+      ORDER BY id DESC
+      LIMIT $2 OFFSET $3
+      `,
+      [event_id, limit, offset]
+    );
+
+    const totalResult = await client.query(
+      `
+      SELECT COUNT(*) FROM qr_codes WHERE event_id = $1
+      `,
+      [event_id]
+    );
+
+    return {
+      data: result.rows,
+      total: parseInt(totalResult.rows[0].count, 10), // Get total number of records
+    };
+  } catch (error) {
+    console.error("Error fetching QR info:", error);
+    return { data: [], total: 0 };
+  } finally {
+    client.release();
+  }
+}
+
+
+
 // Function to fetch QR info for an event
-export async function getQrInfo(event_id) {
+export async function getAllQR(event_id) {
   const client = await pool.connect();
   try {
     const result = await client.query(

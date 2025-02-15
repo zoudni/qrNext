@@ -34,7 +34,7 @@ export default function Layout({ children }) {
     <>
       <Navbar toggle={toggle} setToggle={setToggle} />
 
-      <Sidebar toggle={toggle} />
+      <Sidebar toggle={toggle} setToggle={setToggle} />
 
       <div className="justify-center items-center  p-4 mt-24 sm:ml-64  ">
         {children}
