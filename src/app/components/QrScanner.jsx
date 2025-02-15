@@ -4,8 +4,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import { useState, useEffect } from "react";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 
-export default function QrScanner() {
-  const [scanResult, setScanResult] = useState(null);
+export default function QrScanner({ onRead }) {
   const [validationStatus, setValidationStatus] = useState(null);
   const [isScanning, setIsScanning] = useState(true);
 
@@ -47,7 +46,6 @@ export default function QrScanner() {
   const resetScanner = () => {
     setIsScanning(true);
     setValidationStatus(null);
-    setScanResult(null);
   };
 
   return (
@@ -67,9 +65,11 @@ export default function QrScanner() {
             <span className="ml-2">{validationStatus.message}</span>
           </div>
         )}
-      </div>
+      </div>  
 
-      <div id="reader" className="w-full"></div>
+        <div id="reader" className="w-full">
+    
+      </div>
 
       {!isScanning && (
         <button

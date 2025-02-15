@@ -11,10 +11,12 @@ export default function DownloadAllQRCodesButton({ qrInfos }) {
     }
 
     const pdf = new jsPDF();
-
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+    
     for (let i = 0; i < qrInfos.length; i++) {
       const qrInfo = qrInfos[i];
-      const qrCodeImage = await QRCode.toDataURL(qrInfo.code);
+      const link = `${baseUrl}/api/qr/validate?token=${qrInfo.code}`; 
+      const qrCodeImage = await QRCode.toDataURL(link);
 
       if (i !== 0) {
         pdf.addPage();
