@@ -8,23 +8,17 @@ const PlusIcon = () => {
       xmlns:xlink="http://www.w3.org/1999/xlink"
       fill="#000000"
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         {" "}
         <title>plus_circle [#1441]</title> <desc>Created with Sketch.</desc>{" "}
         <defs> </defs>{" "}
-        <g
-          id="Page-1"
-          stroke="none"
-          stroke-width="1"
-          fill="none"
-          fill-rule="evenodd"
-        >
+        <g id="Page-1" stroke="none" fill="none" fill-rule="evenodd">
           {" "}
           <g
             id="Dribbble-Light-Preview"
