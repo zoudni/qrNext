@@ -1,7 +1,9 @@
 import Link from "next/link";
 import EventIcon from "./icons/EventIcon";
 import SignOutIcon from "./icons/SignoutIcon";
+import ScanIcon from "./icons/ScanIcon";
 import { SignOutButton } from "@clerk/nextjs";
+import { PlusIcon } from "@heroicons/react/24/solid";
 
 const Sidebar = ({ toggle, setToggle }) => {
   return (
@@ -22,30 +24,33 @@ const Sidebar = ({ toggle, setToggle }) => {
       >
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800 mt-10 ">
           <ul className="space-y-2 font-medium">
-            <li>
+            {/* Events */}
+           <li>
               <Link
-                href="/Home/events"
+                href="/Home"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <EventIcon />
                 <span className="ms-3">Events</span>
               </Link>
             </li>
+            {/* adding events */}
             <li>
               <Link
-                href="/Home/generate"
+                href="/Home/events"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <EventIcon />
-                <span className="ms-3">Generate</span>
+                <PlusIcon  className="w-5 h-5" />
+                <span className="ms-3">Add Events</span>
               </Link>
             </li>
+            {/* scanning page */}
             <li>
               <Link
                 href="/Home/scan"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <EventIcon className="w-5 h-5" />
+                <ScanIcon className="w-5 h-5" />
                 <span className="ms-3">Scan QR</span>
               </Link>
             </li>

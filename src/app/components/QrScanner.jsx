@@ -12,11 +12,15 @@ export default function QrScanner({ onRead }) {
     const scanner = new Html5QrcodeScanner("reader", {
       qrbox: { width: 250, height: 250 },
       fps: 5,
+      rememberLastUsedCamera: false,
+      cameraId: "back-camera",
     });
 
     async function onScanSuccess(decodedText) {
       setIsScanning(false);
       scanner.pause();
+
+      onRead(decodedText);
 
       try {
         const response = await fetch(`/api/qr/validate?token=${decodedText}`);
@@ -65,11 +69,9 @@ export default function QrScanner({ onRead }) {
             <span className="ml-2">{validationStatus.message}</span>
           </div>
         )}
-      </div>  
-
-        <div id="reader" className="w-full">
-    
       </div>
+
+      <div id="reader" className="w-full"></div>
 
       {!isScanning && (
         <button
