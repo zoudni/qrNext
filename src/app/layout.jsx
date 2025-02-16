@@ -22,7 +22,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider localization={arSA}>
+    
+    <ClerkProvider >
       <html lang="en">
         <body>{children}</body>
       </html>
