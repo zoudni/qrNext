@@ -29,7 +29,12 @@ const Sidebar = ({ toggle, setToggle }) => {
               <Link
                 href="/Home"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setToggle(false)} // Close sidebar on link click
+                onClick={() => {
+                  if (window.innerWidth < 640) {
+                    // Check if the screen width is less than 640px
+                    setToggle(false); // Close sidebar only on mobile
+                  }
+                }} // Close sidebar on link click
               >
                 <EventIcon />
                 <span className="ms-3">Events</span>
@@ -40,7 +45,11 @@ const Sidebar = ({ toggle, setToggle }) => {
               <Link
                 href="/Home/events"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setToggle(false)} // Close sidebar on link click
+                onClick={() => {
+                  if (window.innerWidth < 640) {
+                    setToggle(false);
+                  }
+                }} // Close sidebar only on mobile
               >
                 <PlusIcon className="w-5 h-5" />
                 <span className="ms-3">Add Events</span>
@@ -51,7 +60,11 @@ const Sidebar = ({ toggle, setToggle }) => {
               <Link
                 href="/Home/scan"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setToggle(false)} // Close sidebar on link click
+                onClick={() => {
+                  if (window.innerWidth < 640) {
+                    setToggle(false);
+                  }
+                }} // Close sidebar only on mobile
               >
                 <ScanIcon className="w-5 h-5" />
                 <span className="ms-3">Scan QR</span>

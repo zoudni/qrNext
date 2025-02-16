@@ -24,14 +24,17 @@ export default function QrScanner({ onRead }) {
       onRead(decodedText);
 
       try {
+        console.log("Fetching validation for token:", decodedText);
         const response = await fetch(`/api/qr/validate?token=${decodedText}`);
         const data = await response.json();
+        console.log("API Response:", data);
 
         setValidationStatus({
           success: data.valid,
           message: data.message,
         });
       } catch (error) {
+        console.error("Error during fetch:", error);
         setValidationStatus({
           success: false,
           message: "Error validating QR code",

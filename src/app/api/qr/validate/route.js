@@ -86,6 +86,10 @@ export async function GET(request) {
       WHERE id = $1
     `, [qrCode.id]);
 
+    console.log("User ID:", userId); // Check if user ID is retrieved
+    console.log("Token:", token); // Check if token is retrieved
+    console.log("QR Code Result:", qrCode); // Check if QR code is found
+
     if (isApiRequest) {
       return NextResponse.json({
         valid: true,
