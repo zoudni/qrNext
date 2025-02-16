@@ -2,7 +2,6 @@ import Link from "next/link";
 import EventIcon from "./icons/EventIcon";
 import SignOutIcon from "./icons/SignoutIcon";
 import { SignOutButton } from "@clerk/nextjs";
-//import QrCodeIcon from "./icons/QrCodeIcon";
 
 const Sidebar = ({ toggle, setToggle }) => {
   return (
