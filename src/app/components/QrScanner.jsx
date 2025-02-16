@@ -14,6 +14,7 @@ export default function QrScanner({ onRead }) {
       fps: 5,
       rememberLastUsedCamera: false,
       cameraId: "back-camera",
+      videoConstraints: { facingMode: { exact: "environment" } },
     });
 
     async function onScanSuccess(decodedText) {
