@@ -3,14 +3,14 @@
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { useState, useEffect } from "react";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
-
+import './styles/scanner.css';
 export default function QrScanner({ onRead }) {
   const [validationStatus, setValidationStatus] = useState(null);
   const [isScanning, setIsScanning] = useState(true);
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", {
-      qrbox: { width: 250, height: 250 },
+      qrbox: { width: 150, height: 150 },
       fps: 5,
       rememberLastUsedCamera: false,
       cameraId: "back-camera",
@@ -20,15 +20,26 @@ export default function QrScanner({ onRead }) {
     async function onScanSuccess(decodedText) {
       setIsScanning(false);
       scanner.pause();
-
-      onRead(decodedText);
-
+    
+      const url = new URL(decodedText);
+      const token = url.searchParams.get('token');
+    
       try {
-        console.log("Fetching validation for token:", decodedText);
-        const response = await fetch(`/api/qr/validate?token=${decodedText}`);
+        console.log("Fetching validation for token:", token);
+    
+        const response = await fetch(`/api/qr/validate?token=${token}`, {
+          headers: {
+            'Accept': 'application/json', // Explicitly request JSON response
+          },
+        });
+    
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    
         const data = await response.json();
         console.log("API Response:", data);
-
+    
         setValidationStatus({
           success: data.valid,
           message: data.message,

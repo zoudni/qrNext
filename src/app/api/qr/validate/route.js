@@ -11,7 +11,7 @@ const pool = new Pool ({
 
 export async function GET(request) {
   const client = await pool.connect();
-  const headersList = headers();
+  const headersList = await headers();
   const isApiRequest = headersList.get('accept')?.includes('application/json');
 
   try {

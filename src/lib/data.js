@@ -21,7 +21,7 @@ export async function getEvents(userId) {
       [userId]
     );
 
-    console.log("Fetched Events:", result.rows);
+ //   console.log("Fetched Events:", result.rows);
     return result.rows;
   } catch (error) {
     console.error("Error fetching events:", error);
