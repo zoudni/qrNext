@@ -29,7 +29,7 @@ const useGenerator = () => {
     setLastGeneratedUser(newUser); // Store the last generated user
     setFormData({ name: "", surname: "" });
 
-    console.log("Updated User List:", [...user, newUser]);
+   // console.log("Updated User List:", [...user, newUser]);
   };
 
   const generateQRCode = () => {

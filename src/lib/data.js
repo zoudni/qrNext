@@ -80,7 +80,7 @@ export async function getAllQR(event_id) {
       [event_id]
     );
 
-    console.log("Fetched QR Codes:", result.rows);
+    //console.log("Fetched QR Codes:", result.rows);
     return result.rows;
   } catch (error) {
     console.error("Error fetching QR info:", error);

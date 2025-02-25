@@ -78,7 +78,7 @@ export async function POST(req) {
           `,
           [userId, email]
         );
-        console.log(`New user added with ID: ${userId}`);
+       // console.log(`New user added with ID: ${userId}`);
       } catch (error) {
         console.error('Error inserting new user:', error);
         return new Response('Error inserting new user', { status: 500 });
@@ -91,6 +91,6 @@ export async function POST(req) {
     }
   }
 
-  console.log(`Received webhook with ID ${id} and event type of ${eventType}`);
+ // console.log(`Received webhook with ID ${id} and event type of ${eventType}`);
   return new Response('Webhook received', { status: 200 });
 }

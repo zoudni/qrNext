@@ -20,7 +20,7 @@ export async function createEvent(previousState, formData) {
     const end_date_raw = formData.get('end_date');
     const { userId } = await auth();
 
-    console.log('Received Data:', { title, description, start_date_raw, end_date_raw, userId });
+   // console.log('Received Data:', { title, description, start_date_raw, end_date_raw, userId });
 
     if (!title || !description || !start_date_raw || !end_date_raw || !userId) {
       throw new Error('Missing required fields');
@@ -42,7 +42,7 @@ export async function createEvent(previousState, formData) {
       [userId, title, description, start_date, end_date]
     );
 
-    console.log('SQL Insert Result:', result.rows[0]);
+   // console.log('SQL Insert Result:', result.rows[0]);
 
     revalidatePath("/Home/events");
 
@@ -82,7 +82,7 @@ export async function generateQrInfo(previousState, formData) {
     const amount = parseInt(formData.get("amount"), 10);
     const event_id = formData.get("event_id");
 
-    console.log(`Generating ${amount} QR codes for event ID: ${event_id}`);
+   // console.log(`Generating ${amount} QR codes for event ID: ${event_id}`);
 
     if (!event_id || isNaN(amount) || amount <= 0) {
       throw new Error('Invalid input');

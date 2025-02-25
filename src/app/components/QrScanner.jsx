@@ -38,7 +38,7 @@ export default function QrScanner({ onRead }) {
         }
     
         const data = await response.json();
-        console.log("API Response:", data);
+      //  console.log("API Response:", data);
     
         setValidationStatus({
           success: data.valid,
